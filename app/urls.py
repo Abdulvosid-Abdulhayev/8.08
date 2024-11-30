@@ -1,11 +1,15 @@
-from django.urls import path
-from .views import FoodTypeView,FoodTypeDetailView, FoodView,FoodDetailView, CommentView, CommentDetailView
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import FoodTypeViewSet, FoodViewSet, CommentViewSet, SendEmailView
 
+# Router yaratish
+router = DefaultRouter()
+router.register(r'foodtypes', FoodTypeViewSet, basename='foodtype')
+router.register(r'foods', FoodViewSet, basename='food')
+router.register(r'comments', CommentViewSet, basename='comment')
+
+# URLS
 urlpatterns = [
-    path('food-types/', FoodTypeView.as_view(), name='foodtype-list'),
-    path('food-types/<int:pk>/', FoodTypeDetailView.as_view(), name='foodtype-detail'),
-    path('foods/', FoodView.as_view(), name='food-list'),
-    path('foods/<int:pk>/', FoodDetailView.as_view(), name='food-detail'),
-    path('comments/', CommentView.as_view(), name='comment-list'),
-    path('comments/<int:pk>/', CommentDetailView.as_view(), name='comment-detail'),
+    path('', include(router.urls)),  # ViewSetlar uchun router URL
+    path('send-email/', SendEmailView.as_view(), name='send_email'),  # Email uchun alohida URL
 ]

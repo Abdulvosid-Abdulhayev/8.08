@@ -126,7 +126,20 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.UserRateThrottle',  # Foydalanuvchi uchun cheklov
+        'rest_framework.throttling.AnonRateThrottle',  # Anonim foydalanuvchilar uchun cheklov
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'user': '5/min',  # Foydalanuvchilar uchun minutiga 5 so'rov
+        'anon': '2/min',  # Anonim foydalanuvchilar uchun minutiga 2 so'rov
+        'send_email': '3/hour',  # Email yuborish uchun soatiga 3 marta cheklov
+    }
 }
+# Gmail sozlamalari
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'abdulvosid780@gmail.com'  # Gmail manzilingiz
+EMAIL_HOST_PASSWORD = ''       # Gmail parolingiz (yoki App parol)
