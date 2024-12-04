@@ -134,7 +134,10 @@ REST_FRAMEWORK = {
         'user': '5/min',  # Foydalanuvchilar uchun minutiga 5 so'rov
         'anon': '2/min',  # Anonim foydalanuvchilar uchun minutiga 2 so'rov
         'send_email': '3/hour',  # Email yuborish uchun soatiga 3 marta cheklov
-    }
+    },
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 5,
+    'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning'
 }
 # Gmail sozlamalari
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
